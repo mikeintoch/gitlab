@@ -40,7 +40,7 @@ RUN ( \
 
 #Create persisten storage
 RUN mkdir -p /var/opt/gitlab && \
-	chmod 777 /var/opt/gitlab
+	chmod -R 777 /var/opt/gitlab
 
 # Expose web & ssh
 EXPOSE 443 80 22
