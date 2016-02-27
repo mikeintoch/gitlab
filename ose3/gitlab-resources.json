@@ -210,7 +210,7 @@
                               "volumeMounts": [
                                  {
                                     "name": "pvol",
-                                    "mountPath": "/var/opt/gitlab"
+                                    "mountPath": "/var/opt"
                                  }
                               ],
                               "livenessProbe": {
@@ -428,7 +428,7 @@
                               "volumeMounts": [
                                  {
                                     "name": "pvol",
-                                    "mountPath": "/var/opt/gitlab"
+                                    "mountPath": "/var/opt"
                                  }
                               ],
                               "livenessProbe": {
