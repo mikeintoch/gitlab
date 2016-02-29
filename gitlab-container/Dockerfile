@@ -38,15 +38,15 @@ RUN ( \
   mkdir -p /assets/ && \
   cp /etc/gitlab/gitlab.rb /assets/gitlab.rb
 
-#Create persisten storage
-RUN mkdir -p /var/opt && \
-	chmod -R 777 /var/opt
+#Create persistent storage
+RUN mkdir -p /var/opt/gitlab && \
+	chmod -R 777 /var/opt/gitlab
 
 # Expose web & ssh
 EXPOSE 443 80 22
 
 # Define data volumes
-VOLUME ["/etc/gitlab", "/var/opt", "/var/log/gitlab"]
+VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
 
 # Copy assets
 COPY assets/wrapper /usr/local/bin/
