@@ -29,6 +29,7 @@ RUN mkdir -p /opt/gitlab/sv/sshd/supervise \
 RUN echo "UseDNS no" >> /etc/ssh/sshd_config
 
 COPY assets/RELEASE /RELEASE
+
 # Prepare default configuration
 RUN ( \
   echo "" && \
@@ -38,9 +39,17 @@ RUN ( \
   mkdir -p /assets/ && \
   cp /etc/gitlab/gitlab.rb /assets/gitlab.rb
 
+
+
+COPY assets/fixPermissions.sh /usr/local/bin/
+RUN chmod 755 /usr/local/bin/fixPermissions.sh
+
+ 
 #Create persistent storage
 RUN mkdir -p /var/opt/gitlab && \
 	chmod -R 777 /var/opt/gitlab
+
+RUN  /usr/local/bin/fixPermissions.sh /var/opt/gitlab
 
 # Expose web & ssh
 EXPOSE 443 80 22
