@@ -40,7 +40,7 @@ RUN ( \
   mkdir -p /assets/ && \
   cp /etc/gitlab/gitlab.rb /assets/gitlab.rb
 
-
+#RUN groupadd -r git && useradd -r -g git -m -d /var/opt/gitlab -s /sbin/nologin -c "Git user" git
 
 COPY assets/fixPermissions.sh /usr/local/bin/
 RUN chmod 755 /usr/local/bin/fixPermissions.sh
@@ -48,9 +48,10 @@ RUN chmod 755 /usr/local/bin/fixPermissions.sh
  
 #Create persistent storage
 RUN mkdir -p /var/opt/gitlab && \
-	chmod -R 777 /var/opt/gitlab
+	chmod -R 0775 /var/opt/gitlab
 
-RUN  /usr/local/bin/fixPermissions.sh /var/opt/gitlab
+
+#RUN  /usr/local/bin/fixPermissions.sh /var/opt/gitlab
 
 # Expose web & ssh
 EXPOSE 443 80 22
@@ -58,7 +59,7 @@ EXPOSE 443 80 22
 # Define data volumes
 VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
 
-# Copy assets
+# Copy assets 
 COPY assets/wrapper /usr/local/bin/
 
 # Wrapper to handle signal, trigger runit and reconfigure GitLab
