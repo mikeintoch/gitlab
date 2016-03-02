@@ -37,27 +37,18 @@ RUN ( \
   echo "# Docker options" && \
   echo "# Prevent Postgres from trying to allocate 25% of total memory" && \
   echo "postgresql['shared_buffers'] = '1MB'" ) >> /etc/gitlab/gitlab.rb && \
+  echo "user['home'] = \"/gitlab\"" >> /etc/gitlab/gitlab.rb && \
+  echo "git_data_dir \"/gitlab/git-data\"" >> /etc/gitlab/gitlab.rb && \
+  echo "postgresql['data_dir'] = \"/gitlab/postgresql/data\"" >> /etc/gitlab/gitlab.rb && \
+  echo "gitlab_rails['backup_path'] = \"/gitlab/backups\"" >> /etc/gitlab/gitlab.rb && \
   mkdir -p /assets/ && \
   cp /etc/gitlab/gitlab.rb /assets/gitlab.rb
-
-#RUN groupadd -r git && useradd -r -g git -m -d /var/opt/gitlab -s /sbin/nologin -c "Git user" git
-
-COPY assets/fixPermissions.sh /usr/local/bin/
-RUN chmod 755 /usr/local/bin/fixPermissions.sh
-
- 
-#Create persistent storage
-RUN mkdir -p /var/opt/gitlab && \
-	chmod -R 0775 /var/opt/gitlab
-
-
-#RUN  /usr/local/bin/fixPermissions.sh /var/opt/gitlab
 
 # Expose web & ssh
 EXPOSE 443 80 22
 
 # Define data volumes
-VOLUME ["/etc/gitlab", "/var/opt/gitlab", "/var/log/gitlab"]
+VOLUME ["/etc/gitlab", "/gitlab", "/var/log/gitlab"]
 
 # Copy assets 
 COPY assets/wrapper /usr/local/bin/
