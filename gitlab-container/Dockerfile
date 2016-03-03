@@ -37,7 +37,6 @@ RUN ( \
   echo "# Docker options" && \
   echo "# Prevent Postgres from trying to allocate 25% of total memory" && \
   echo "postgresql['shared_buffers'] = '1MB'" ) >> /etc/gitlab/gitlab.rb && \
-  echo "user['home'] = \"/gitlab\"" >> /etc/gitlab/gitlab.rb && \
   echo "git_data_dir \"/gitlab/git-data\"" >> /etc/gitlab/gitlab.rb && \
   echo "postgresql['data_dir'] = \"/gitlab/postgresql/data\"" >> /etc/gitlab/gitlab.rb && \
   echo "gitlab_rails['backup_path'] = \"/gitlab/backups\"" >> /etc/gitlab/gitlab.rb && \
