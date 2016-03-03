@@ -43,6 +43,23 @@ RUN ( \
   mkdir -p /assets/ && \
   cp /etc/gitlab/gitlab.rb /assets/gitlab.rb
 
+
+# Create groups
+RUN groupadd -g 996 gitlab-psql && \
+    groupadd -g 998 git
+
+# Create accounts
+RUN useradd -m -u 996 -g gitlab-psql -m -s /bin/sh gitlab-psql && \
+	useradd -m -u 998 -g git -m -s /bin/sh git
+
+#Create directories
+RUN mkdir -p /gitlab/git-data && \
+    mkdir -p /gitlab/postgresql/data
+
+#Update permissions
+RUN chown -R gitlab-psql:gitlab-psql /gitlab/postgresql && \
+	chown -R git:git /gitlab/git-data
+
 # Expose web & ssh
 EXPOSE 443 80 22
 
