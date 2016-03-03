@@ -53,7 +53,7 @@ RUN useradd -m -u 996 -g gitlab-psql -m -s /bin/sh gitlab-psql && \
 	useradd -m -u 998 -g git -m -s /bin/sh git
 
 #Create directories
-RUN mkdir -p /gitlab/git-data && \
+RUN mkdir -p /gitlab/git-data/repositories && \
     mkdir -p /gitlab/postgresql/data
 
 #Update permissions
